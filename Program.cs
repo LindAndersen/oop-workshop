@@ -5,7 +5,7 @@ using Physical;
 
 // load history
 History hist = new History("code/data/data");
-//hist.PrettyPrint();
+hist.PrettyPrint();
 
 
 // register consumers for events
@@ -15,6 +15,6 @@ manager.ConstructManagerFromChannels(channels);
 manager.PrettyPrint();
 
 // step through timeline
-//hist.Replay();
+hist.Replay();
 
 

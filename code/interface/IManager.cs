@@ -1,5 +1,6 @@
 using Physical;
 using oop_workshop.domain.building_structure;
+using oop_workshop.domain.equipment;
 
 namespace oop_workshop.interfaces {
     public interface IManager {
