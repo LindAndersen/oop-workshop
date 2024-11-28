@@ -1,12 +1,11 @@
 using Physical;
 
 namespace oop_workshop.domain.equipment {
-    class SetPoint : Device, IChannelSubscriber {
-        private int dayValue;
-        private int nightValue;
-        public SetPoint(long id, string name, int dayValue, int nightValue) : base(id, name) {
-            this.dayValue = dayValue;
-            this.nightValue = nightValue;
+    class SetPoint : Producer, IChannelSubscriber {
+        private int? dayValue = null;
+        private int? nightValue = null;
+        public SetPoint(string media, string modality, string unit) : base(media, modality, unit) {
+            
         }
 
         public void NewSample(Channel channel, Sample? sample)

@@ -2,9 +2,9 @@ using System.Runtime.InteropServices;
 using Physical;
 
 namespace oop_workshop.domain.equipment {
-    class Sensor : Device, IChannelSubscriber {
+    public class Sensor : Producer, IChannelSubscriber {
 
-        public Sensor(long id, string name) : base(id, name) {
+        public Sensor(string media, string modality , string unit) : base(media, modality, unit) {
 
         }
         public void NewSample(Channel channel, Sample? sample)

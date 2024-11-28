@@ -2,27 +2,18 @@ using System.Numerics;
 using oop_workshop.domain.equipment;
 
 namespace oop_workshop.domain.building_structure {
-    class Room : IComparable<Room> {
-        private long id;
-        private string name;
-        private List<Device> devices;
+    public class Room : IComparable<Room> {
+        public string roomNumber;
+        public List<Producer> producers;
 
-        public Room(long id, string name) {
-            this.id = id;
-            this.name = name;
-            devices = new List<Device>();
+        public Room(string roomNumber) {
+            this.roomNumber = roomNumber;
+            producers = new List<Producer>();
         }
         
-        public Room(long id, string name, List<Device> devices) {
-            this.id = id;
-            this.name = name;
-            this.devices = devices;
-        }
-
-        public Device AddActuator(long id, string name, string controlType, int controlValue) {
-            Actuator actuator = new(id, name, controlValue, controlType);
-            devices.Add(actuator);
-            return actuator;
+        public Room(string roomNumber, List<Producer> producers) {
+            this.roomNumber = roomNumber;
+            this.producers = producers;
         }
 
         public int CompareTo(Room? other)
@@ -33,6 +24,13 @@ namespace oop_workshop.domain.building_structure {
 
         public int GetEnergiConsumption() {
             return 0;
+        }
+
+        public void PrettyPrint() {
+            Console.WriteLine($".. .. .. .. Room({roomNumber})");
+            foreach(Device d in producers) {
+                d.PrettyPrint(5);
+            }
         }
     }
 }

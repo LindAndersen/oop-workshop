@@ -1,5 +1,5 @@
 building:White House
-type:setpoint
+type:sensor
 floor:1
 room:2
 media:occupancy
