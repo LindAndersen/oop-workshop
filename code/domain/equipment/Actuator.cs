@@ -12,6 +12,9 @@ namespace oop_workshop.domain.equipment {
             this.setPoint = setPoint;
         }
 
+        public void Do() {
+            
+        }
         
     }
 }

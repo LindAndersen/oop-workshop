@@ -6,13 +6,16 @@ using Physical;
 namespace oop_workshop.presentation {
     public class Manager : IManager
     {
-        Building? building {get;set;}
+        IDictionary<String, Building> buildings {get;set;}
+
+        public Manager() {
+            buildings = new Dictionary<string, Building>();
+        }
         public void ConstructManagerFromChannels(ISet<Channel> channels)
         {
-            building = null;
-
-            Floor? floor;
-            Room? room;
+            Building? building = null;
+            Floor? floor = null;
+            Room? room = null;
 
             foreach(Channel c in channels) {
                 bool isFloorSensor = false;
@@ -25,13 +28,18 @@ namespace oop_workshop.presentation {
                 string levelNumber = c.Metadata["floor"];
                 string? roomNumber = null;
 
-                building ??= new Building(buildingName);
-
-                if(!building.FloorExists(levelNumber)) {
-                    floor = new Floor(levelNumber);
-                    building.floors.Add(floor);
+                if(building == null || !buildings.ContainsKey(buildingName)) {
+                    building = new(buildingName);
+                    buildings.Add(buildingName, building);
                 } else {
-                    floor = building.GetFloorByLevel(levelNumber);
+                    building = buildings[buildingName];
+                }
+
+                if(!building.floors.ContainsKey(levelNumber)) {
+                    floor = new Floor(levelNumber);
+                    building.floors.Add(levelNumber, floor);
+                } else {
+                    floor = building.floors[levelNumber];
                 }
 
                 try {
@@ -40,11 +48,11 @@ namespace oop_workshop.presentation {
                     isFloorSensor = true;
                 }
 
-                if(!isFloorSensor && !floor.RoomExists(roomNumber)) {
+                if(!isFloorSensor && !floor.rooms.ContainsKey(roomNumber)) {
                     room = new Room(roomNumber);
-                    floor.rooms.Add(room);
-                } else {
-                    room = floor.GetRoomByRoomNumber(roomNumber);
+                    floor.rooms.Add(roomNumber, room);
+                } else if (!isFloorSensor) {
+                    room = floor.rooms[roomNumber];
                 }
                 
                 
@@ -74,7 +82,9 @@ namespace oop_workshop.presentation {
 
         public void PrettyPrint()
         {
-            building.PrettyPrint();
+            foreach(KeyValuePair<string, Building> b in buildings) {
+                b.Value.PrettyPrint();
+            }
         }
     }
 }
